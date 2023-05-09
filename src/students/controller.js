@@ -21,7 +21,7 @@ const addStudents=(req,res)=>{
     console.log(name,email,age,dob);
     pool.query(queries.checkEmailExists,[email],(error,results)=>{
         if(results.rows.length){
-            res.send("email already exists");
+            return res.send("email already exists");
         }
         //add student to db
         pool.query(
@@ -35,6 +35,7 @@ const addStudents=(req,res)=>{
     });
 };
 const removeStudent=(req,res)=>{
+    console.log("remove students ");
     const id = parseInt(req.params.id);
     pool.query(queries.getStudentsById,[id],(error,results)=>{
         const noStudentFound=!results.rows.length;
@@ -49,6 +50,7 @@ const removeStudent=(req,res)=>{
 }
 
 const updateStudent=(req,res)=>{
+    console.log("update students ");
     const id = parseInt(req.params.id);
     const {name}=req.body;
     pool.query(queries.getStudentsById,[id],(error,results)=>{
